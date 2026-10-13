@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import "./ProviderDashboard.css";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 
 const initialServiceForm = {
   category: "Photography",
@@ -46,8 +46,8 @@ export default function ProviderDashboard({ provider, onLogout }) {
 
     try {
       const [servicesResponse, bookingsResponse] = await Promise.all([
-        fetch(`${API_URL}/services/provider/${providerId}`),
-        fetch(`${API_URL}/bookings/provider/${providerId}`),
+        apiFetch(`${API_URL}/services/provider/${providerId}`),
+        apiFetch(`${API_URL}/bookings/provider/${providerId}`),
       ]);
 
       if (!servicesResponse.ok) {
@@ -143,7 +143,7 @@ export default function ProviderDashboard({ provider, onLogout }) {
     setNotice("");
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${API_URL}/bookings/${bookingId}/status`,
         {
           method: "PATCH",
@@ -208,7 +208,7 @@ export default function ProviderDashboard({ provider, onLogout }) {
     setNotice("");
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${API_URL}/services/provider/${providerId}`,
         {
           method: "POST",

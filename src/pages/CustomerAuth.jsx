@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import "../App.css";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 
 export default function CustomerAuth({ onBack, onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -54,7 +54,7 @@ export default function CustomerAuth({ onBack, onLogin }) {
             password: form.password,
           };
 
-      const response = await fetch(endpoint, {
+      const response = await apiFetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,9 +103,7 @@ export default function CustomerAuth({ onBack, onLogin }) {
       alert(`Welcome, ${data?.name || role}! Login successful.`);
       onLogin(account);
     } catch (error) {
-      alert(
-        "Cannot connect to the server. Check your connection and try again."
-      );
+      alert(error.message || "Cannot connect to the server. Check your connection and try again.");
     } finally {
       setLoading(false);
     }

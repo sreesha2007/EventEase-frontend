@@ -8,13 +8,17 @@
    `EventEase-frontend`.
 3. Vercel should detect Vite automatically. Use `npm run build` as the build
    command and `dist` as the output directory.
-4. Add `VITE_API_BASE_URL` in the Vercel project environment variables. Set it
-   to the public URL of the deployed Spring Boot backend, without a trailing
-   slash or `/api` suffix (for example, `https://api.example.com`).
-5. Deploy or redeploy after setting the environment variable.
+4. You can deploy the frontend before the backend is available. The public
+   landing page will work, but sign-in, registration, and dashboard API features
+   will remain unavailable until the backend is deployed.
+5. Once the backend is publicly available, add `VITE_API_BASE_URL` in the Vercel
+   project environment variables. Set it to the backend URL without a trailing
+   slash or `/api` suffix (for example, `https://api.example.com`), then
+   redeploy the frontend.
 
-Production builds fail if `VITE_API_BASE_URL` is missing, to prevent deploying
-a frontend that still points at localhost or cannot reach an API.
+When `VITE_API_BASE_URL` is not configured in production, API actions show a
+message that the backend is not deployed. Local development continues to use
+`http://localhost:8080` by default.
 
 The backend must be deployed separately and reachable over HTTPS. Configure
 `APP_CORS_ALLOWED_ORIGIN` in its hosting environment to the exact public

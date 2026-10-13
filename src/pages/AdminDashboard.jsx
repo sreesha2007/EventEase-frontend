@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import "./AdminDashboard.css";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 
 const API = `${API_URL}/admin`;
 
@@ -15,7 +15,7 @@ export default function AdminDashboard({ admin, onLogout }) {
   const [actionMessage, setActionMessage] = useState("");
 
   async function fetchList(url, errorMessage) {
-    const response = await fetch(url);
+    const response = await apiFetch(url);
 
     if (!response.ok) {
       throw new Error(errorMessage);
@@ -52,7 +52,7 @@ export default function AdminDashboard({ admin, onLogout }) {
 
   async function approveProvider(provider) {
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${API}/providers/${provider.customerId}/approve`,
         { method: "POST" }
       );
@@ -81,7 +81,7 @@ export default function AdminDashboard({ admin, onLogout }) {
     if (!reason || !reason.trim()) return;
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${API}/providers/${provider.customerId}/reject`,
         {
           method: "POST",

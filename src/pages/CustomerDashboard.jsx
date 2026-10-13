@@ -2,7 +2,7 @@
 import { useMemo, useState, useEffect } from "react";
 import "./CustomerDashboard.css";
 import ProviderListing from "./ProviderListing";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 
 const categories = [
   "All",
@@ -77,7 +77,7 @@ export default function CustomerDashboard({ customer, onLogout }) {
   useEffect(() => {
     async function loadServices() {
       try {
-        const response = await fetch(`${API_URL}/services`);
+        const response = await apiFetch(`${API_URL}/services`);
 
         if (!response.ok) {
           throw new Error("Unable to load services from the server.");
@@ -136,7 +136,7 @@ export default function CustomerDashboard({ customer, onLogout }) {
       setBookingError("");
 
       try {
-        const response = await fetch(
+        const response = await apiFetch(
           `${API_URL}/bookings/customer/${customer.id}`
         );
 
@@ -238,7 +238,7 @@ export default function CustomerDashboard({ customer, onLogout }) {
         .filter(Boolean)
         .join("\n");
 
-      const response = await fetch(`${API_URL}/bookings`, {
+      const response = await apiFetch(`${API_URL}/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -265,7 +265,7 @@ export default function CustomerDashboard({ customer, onLogout }) {
       setNotice("Your booking request was submitted successfully!");
 
       // Reload booking history from the database.
-      const bookingsResponse = await fetch(
+      const bookingsResponse = await apiFetch(
         `${API_URL}/bookings/customer/${customer.id}`
       );
 

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "./ProviderListing.css";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 
 export default function ProviderListing({
   service,
@@ -24,12 +24,12 @@ export default function ProviderListing({
       setBookedDates([]);
 
       try {
-        const datesPromise = fetch(
+        const datesPromise = apiFetch(
           `${API_URL}/bookings/service/${service.id}/booked-dates`
         );
 
         const customerBookingsPromise = customer?.id
-          ? fetch(`${API_URL}/bookings/customer/${customer.id}`)
+          ? apiFetch(`${API_URL}/bookings/customer/${customer.id}`)
           : Promise.resolve(null);
 
         const [datesResponse, customerResponse] = await Promise.all([

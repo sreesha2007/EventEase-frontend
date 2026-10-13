@@ -1,13 +1,16 @@
 const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
-
-if (!configuredApiBaseUrl && import.meta.env.PROD) {
-  throw new Error(
-    "VITE_API_BASE_URL must be set to the deployed backend URL."
-  );
-}
-
-const apiBaseUrl = (
-  configuredApiBaseUrl || "http://localhost:8080"
-).replace(/\/+$/, "");
+const apiBaseUrl = (configuredApiBaseUrl || (
+  import.meta.env.DEV ? "http://localhost:8080" : ""
+)).replace(/\/+$/, "");
 
 export const API_URL = `${apiBaseUrl}/api`;
+
+export function apiFetch(url, options) {
+  if (!configuredApiBaseUrl && import.meta.env.PROD) {
+    throw new Error(
+      "The EventEase backend is not deployed yet. Please try again after it is available."
+    );
+  }
+
+  return fetch(url, options);
+}
