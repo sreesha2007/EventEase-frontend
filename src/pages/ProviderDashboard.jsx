@@ -1,8 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import "./ProviderDashboard.css";
-
-const API_URL = "http://localhost:8080/api";
+import { API_URL } from "../api";
 
 const initialServiceForm = {
   category: "Photography",

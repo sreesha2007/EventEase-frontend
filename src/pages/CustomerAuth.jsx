@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import "../App.css";
+import { API_URL } from "../api";
 
 export default function CustomerAuth({ onBack, onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -38,15 +39,11 @@ export default function CustomerAuth({ onBack, onLogin }) {
       let endpoint;
 
       if (role === "Customer") {
-        endpoint = `http://localhost:8080/api/customers/${
-          isLogin ? "login" : "register"
-        }`;
+        endpoint = `${API_URL}/customers/${isLogin ? "login" : "register"}`;
       } else if (role === "Service Provider") {
-        endpoint = `http://localhost:8080/api/providers/${
-          isLogin ? "login" : "register"
-        }`;
+        endpoint = `${API_URL}/providers/${isLogin ? "login" : "register"}`;
       } else {
-        endpoint = "http://localhost:8080/api/admin/login";
+        endpoint = `${API_URL}/admin/login`;
       }
 
       const payload = isLogin
@@ -107,7 +104,7 @@ export default function CustomerAuth({ onBack, onLogin }) {
       onLogin(account);
     } catch (error) {
       alert(
-        "Cannot connect to the server. Check that Spring Boot is running."
+        "Cannot connect to the server. Check your connection and try again."
       );
     } finally {
       setLoading(false);

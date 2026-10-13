@@ -1,16 +1,40 @@
-# React + Vite
+# EventEase frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Deploy to Vercel
 
-Currently, two official plugins are available:
+1. Push this frontend project to a Git repository and import it into Vercel.
+2. Use the repository root as the Vercel project root directory. If the repository
+   contains both frontend and backend folders, set the root directory to
+   `EventEase-frontend`.
+3. Vercel should detect Vite automatically. Use `npm run build` as the build
+   command and `dist` as the output directory.
+4. Add `VITE_API_BASE_URL` in the Vercel project environment variables. Set it
+   to the public URL of the deployed Spring Boot backend, without a trailing
+   slash or `/api` suffix (for example, `https://api.example.com`).
+5. Deploy or redeploy after setting the environment variable.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Production builds fail if `VITE_API_BASE_URL` is missing, to prevent deploying
+a frontend that still points at localhost or cannot reach an API.
 
-## React Compiler
+The backend must be deployed separately and reachable over HTTPS. Configure
+`APP_CORS_ALLOWED_ORIGIN` in its hosting environment to the exact public
+frontend origin (for example, `https://eventease.vercel.app`, with no path or
+trailing slash). The backend also needs a production MySQL database; configure
+its `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, and
+`SPRING_DATASOURCE_PASSWORD` environment variables with the database
+connection details. Do not put backend secrets in Vercel or any `VITE_`
+variable.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Vercel uses `vercel.json` to serve the SPA entry point for direct page requests.
 
-## Expanding the Oxlint configuration
+## Local development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Copy `.env.example` to `.env`, then run:
+
+```sh
+npm install
+npm run dev
+```
+
+The local API URL defaults to `http://localhost:8080`. Start the backend with
+its local MySQL database, or set `VITE_API_BASE_URL` to another backend URL.

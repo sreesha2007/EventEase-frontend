@@ -1,8 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "./ProviderListing.css";
-
-const API_URL = "http://localhost:8080/api";
+import { API_URL } from "../api";
 
 export default function ProviderListing({
   service,

@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from "react";
 import "./AdminDashboard.css";
+import { API_URL } from "../api";
 
-const API = "http://localhost:8080/api/admin";
+const API = `${API_URL}/admin`;
 
 export default function AdminDashboard({ admin, onLogout }) {
   const [activeTab, setActiveTab] = useState("Overview");

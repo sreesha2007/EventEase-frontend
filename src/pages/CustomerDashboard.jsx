@@ -2,8 +2,7 @@
 import { useMemo, useState, useEffect } from "react";
 import "./CustomerDashboard.css";
 import ProviderListing from "./ProviderListing";
-
-const API_URL = "http://localhost:8080/api";
+import { API_URL } from "../api";
 
 const categories = [
   "All",
