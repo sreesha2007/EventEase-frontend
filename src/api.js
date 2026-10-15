@@ -1,6 +1,6 @@
 const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
 const apiBaseUrl = (configuredApiBaseUrl || (
-  import.meta.env.DEV ? "http://localhost:8080" : ""
+  import.meta.env.DEV ? "https://eventease-backend-rikz.onrender.com/" : ""
 )).replace(/\/+$/, "");
 
 export const API_URL = `${apiBaseUrl}/api`;
